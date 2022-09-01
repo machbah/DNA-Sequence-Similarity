@@ -1,0 +1,22 @@
+function [image] = CGRImageKmerCount(sequence,kmer)
+%UNTITLED2 Summary of this function goes here
+%   Detailed explanation goes here
+%sequence='CCAAAAAAAGGGTTTATGCAATTTTGCCCCCCCCCAAATG';
+%kmer=3;
+seqLength=strlength(sequence);
+
+%matrix size estimation and assign with zero
+dimension=power(2,kmer);
+image=zeros(dimension, dimension, 'uint16');
+
+for i=2:seqLength-kmer
+    kmerSeq=sequence(i:i+kmer-1);
+    %CGR Matrix position calculation
+    [lx,ly] = CGR_K_Mer(kmerSeq);
+    %image generation from counting
+    image(ly,lx)=image(ly,lx)+1;
+end
+%image = normalize(image, 'range', [0 1]);
+%image = uint8(rescale(image,0,255));
+end
+
